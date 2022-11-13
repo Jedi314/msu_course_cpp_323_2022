@@ -2,52 +2,72 @@
 #include <iostream>
 #include <string>
 #include "graph.hpp"
+#include "graph_generator.hpp"
 #include "printing.hpp"
 
-constexpr int kVerticesCount = 14;
-
-Graph generate_graph() {
-  auto graph = Graph();
-
-  for (int i = 0; i < kVerticesCount; ++i) {
-    graph.add_vertex();
+int handle_depth_input() {
+  std::string input;
+  int output, tries = 0;
+  constexpr int max_tries_num = 15;
+  std::cout << "\nEnter the estimated depth of the graph (depth is a "
+               "non-negative integer):"
+            << std::endl;
+  while (tries < max_tries_num && std::cin >> input) {
+    ++tries;
+    if (sscanf(input.c_str(), "%d", &output)) {
+      if (output >= 0)
+        return output;
+    }
+    if (!(tries % 5))
+      std::cout << "Read the description carefully!";
+    else
+      std::cout << "Incorrect depth!";
+    std::cout << " Try one more time." << std::endl;
   }
-
-  graph.add_edge(0, 1);
-  graph.add_edge(0, 2);
-  graph.add_edge(0, 3);
-  graph.add_edge(1, 4);
-  graph.add_edge(1, 5);
-  graph.add_edge(1, 6);
-  graph.add_edge(2, 7);
-  graph.add_edge(2, 8);
-  graph.add_edge(3, 9);
-  graph.add_edge(4, 10);
-  graph.add_edge(5, 10);
-  graph.add_edge(6, 10);
-  graph.add_edge(7, 11);
-  graph.add_edge(8, 11);
-  graph.add_edge(9, 12);
-  graph.add_edge(10, 13);
-  graph.add_edge(11, 13);
-  graph.add_edge(12, 13);
-
-  return graph;
+  throw std::runtime_error("Depth has not been passed!");
+  return output;
 }
 
-void write_to_file(const std::string& output_string,
-                   const std::string& file_name) {
-  std::ofstream output(file_name);
-  if (output.is_open())
-    output << output_string;
-  else
-    std::cout << "File is not accessible!\n";
+int handle_new_vertices_count_input() {
+  std::string input;
+  int output, tries = 0;
+  constexpr int max_tries_num = 15;
+  std::cout
+      << "\nEnter \"new_vertices_count\" variable (new_vertices_count is a "
+         "non-negative integer):"
+      << std::endl;
+  while (tries < max_tries_num && std::cin >> input) {
+    ++tries;
+    if (sscanf(input.c_str(), "%d", &output)) {
+      if (output >= 0)
+        return output;
+    }
+    if (!(tries % 5))
+      std::cout << "Read the description carefully!";
+    else
+      std::cout << "Incorrect new_vertices_count variable!";
+    std::cout << " Try one more time." << std::endl;
+  }
+
+  throw std::runtime_error("New_vertices_count has been passed!");
+  return output;
+}
+
+void write_to_file(const std::string& graph_str, const std::string& file_name) {
+  std::ofstream fout(file_name);
+  fout << graph_str;
 }
 
 int main() {
-  const auto graph = generate_graph();
+  const int depth = handle_depth_input();
+  const int new_vertices_count = handle_new_vertices_count_input();
+  auto params = GraphGenerator::Params(depth, new_vertices_count);
+  const auto generator = GraphGenerator(std::move(params));
+  const auto graph = generator.generate();
+
   const auto graph_json = printing::json::print_graph(graph);
-  std::cout << graph_json << std::endl;
   write_to_file(graph_json, "graph.json");
+  std::cout << "Graph representation:" << std::endl;
+  std::cout << graph_json << std::endl;
   return 0;
 }
