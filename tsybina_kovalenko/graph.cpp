@@ -106,3 +106,4 @@ int const Graph::get_colored_edges_count(Graph::Edge::Color color) const {
     return empty_vector_size;
   }
 }
+
