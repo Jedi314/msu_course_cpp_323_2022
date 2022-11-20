@@ -11,3 +11,4 @@ inline const std::string kLogFilePath = kTempDirectoryPath + kLogFilename;
 
 }  // namespace config
 }  // namespace uni_course_cpp
+
