@@ -2,6 +2,7 @@
 
 #include <sstream>
 #include <stdexcept>
+#include <string>
 #include "graph.hpp"
 
 namespace uni_course_cpp {
