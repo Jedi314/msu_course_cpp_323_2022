@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <cassert>
+#include <stdexcept>
 #include <unordered_map>
 #include <unordered_set>
 #include <vector>

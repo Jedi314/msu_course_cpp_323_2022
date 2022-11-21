@@ -56,4 +56,3 @@ class GraphGenerator {
   void generate_red_edges(Graph& graph) const;
 };
 }  // namespace uni_course_cpp
-
