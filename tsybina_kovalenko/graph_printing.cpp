@@ -13,16 +13,20 @@ std::string print_graph(const Graph& graph) {
     graph_data_string << separator << graph.vertices_at_depth(i).size();
     separator = ",";
   }
+
   graph_data_string << "]},\n\tedges: {amount: " << graph.edges().size()
-                    << ", distribution: {grey: "
-                    << graph.get_colored_edges_count(Graph::Edge::Color::Grey)
-                    << ", green: "
-                    << graph.get_colored_edges_count(Graph::Edge::Color::Green)
-                    << ", yellow: "
-                    << graph.get_colored_edges_count(Graph::Edge::Color::Yellow)
-                    << ", red: "
-                    << graph.get_colored_edges_count(Graph::Edge::Color::Red)
-                    << "}}\n}";
+                    << ", distribution: {";
+
+  for (int color = 0; color < sizeof(Graph::Edge::Color); ++color) {
+    graph_data_string
+        << print_edge_color((Graph::Edge::Color)(color)) << ": "
+        << graph.get_colored_edges_ids((Graph::Edge::Color)(color)).size();
+    if (color != (sizeof(Graph::Edge::Color) - 1)) {
+      graph_data_string << ", ";
+    } else {
+      graph_data_string << "}}\n}";
+    }
+  }
   return graph_data_string.str();
 }
 
