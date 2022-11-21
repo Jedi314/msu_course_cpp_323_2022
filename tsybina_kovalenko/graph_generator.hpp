@@ -29,27 +29,6 @@ class GraphGenerator {
  private:
   Params params_ = Params(0, 0);
 
-  mutable std::mt19937 generator_{std::random_device()()};
-
-  bool check_probability(float chance) const {
-    std::bernoulli_distribution distribution(chance);
-    return distribution(generator_);
-  }
-
   void generate_grey_edges(Graph& graph) const;
-
-  void generate_green_edges(Graph& graph) const;
-
-  Graph::VertexId select_random_vertex(
-      const std::vector<Graph::VertexId>& probable_vertices) const;
-
-  std::vector<Graph::VertexId> get_unconnected_vertex_ids(
-      const Graph& graph,
-      Graph::Depth depth,
-      Graph::VertexId from_vertex_id) const;
-
-  void generate_yellow_edges(Graph& graph) const;
-
-  void generate_red_edges(Graph& graph) const;
 };
 }  // namespace uni_course_cpp
