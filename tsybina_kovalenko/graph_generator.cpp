@@ -1,5 +1,10 @@
 #include "graph_generator.hpp"
 
+namespace {
+static constexpr float kGreenEdgeGenerationChance = 0.1f;
+static constexpr float kRedEdgeGenerationChance = 0.33f;
+}  // namespace
+
 namespace uni_course_cpp {
 
 Graph GraphGenerator::generate() const {

@@ -27,9 +27,6 @@ class GraphGenerator {
   Graph generate() const;
 
  private:
-  static constexpr float kGreenEdgeGenerationChance = 0.1f;
-  static constexpr float kRedEdgeGenerationChance = 0.33f;
-
   Params params_ = Params(0, 0);
 
   mutable std::mt19937 generator_{std::random_device()()};
