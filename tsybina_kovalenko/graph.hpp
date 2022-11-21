@@ -84,7 +84,7 @@ class Graph {
     Color color_;
   };
 
-  const int get_colored_edges_count(Graph::Edge::Color) const;
+  const std::vector<EdgeId> get_colored_edges_ids(Graph::Edge::Color) const;
 
  private:
   std::unordered_map<VertexId, Vertex> vertices_;

@@ -1,9 +1,6 @@
 #include "graph.hpp"
 
-namespace {
-using Graph = uni_course_cpp::Graph;
-}
-
+namespace uni_course_cpp {
 Graph::VertexId Graph::add_vertex() {
   const VertexId new_vertex_id = get_new_vertex_id();
   vertices_.emplace(new_vertex_id, new_vertex_id);
@@ -30,11 +27,7 @@ void Graph::add_edge(VertexId from_vertex_id, VertexId to_vertex_id) {
     set_vertex_depth(to_vertex_id, depth_of(from_vertex_id) + 1);
   }
 
-  if (colored_edge_ids_.find(edge_color) != colored_edge_ids_.end()) {
-    colored_edge_ids_.at(edge_color).push_back(edge_id);
-  } else {
-    colored_edge_ids_.emplace(edge_color, std::vector{edge_id});
-  }
+  colored_edge_ids_[edge_color].push_back(edge_id);
 }
 
 std::vector<Graph::VertexId> Graph::connected_vertices(
@@ -98,11 +91,13 @@ Graph::VertexId Graph::other_end_of(EdgeId edge_id, VertexId vertex_id) const {
   return edge.from_vertex_id();
 }
 
-int const Graph::get_colored_edges_count(Graph::Edge::Color color) const {
+const std::vector<Graph::EdgeId> Graph::get_colored_edges_ids(
+    Graph::Edge::Color color) const {
   if (colored_edge_ids_.find(color) != colored_edge_ids_.end()) {
-    return colored_edge_ids_.at(color).size();
+    return colored_edge_ids_.at(color);
   } else {
-    static const int empty_vector_size = 0;
-    return empty_vector_size;
+    static const std::vector<EdgeId> empty_vector_;
+    return empty_vector_;
   }
 }
+}  // namespace uni_course_cpp
