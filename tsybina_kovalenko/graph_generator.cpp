@@ -1,10 +1,5 @@
 #include "graph_generator.hpp"
 
-namespace {
-using GraphGenerator = uni_course_cpp::GraphGenerator;
-using Graph = uni_course_cpp::Graph;
-}  // namespace
-
 namespace uni_course_cpp {
 
 Graph GraphGenerator::generate() const {
